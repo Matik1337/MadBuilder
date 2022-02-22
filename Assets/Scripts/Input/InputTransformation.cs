@@ -35,9 +35,9 @@ public class InputTransformation : MonoBehaviour
     {
         _movementSystem.MoveForward();
 
-        float targetOffset = _movementSystem.CurrentRoad.Width * _joystick.Horizontal;
-        _offset = Mathf.MoveTowards(_offset, targetOffset, _offsetChangingStep);
-        _movementSystem.SetOffset(_offset);
+        //float targetOffset = _movementSystem.CurrentRoad.Width * _joystick.Horizontal;
+        //_offset = Mathf.MoveTowards(_offset, targetOffset, _offsetChangingStep);
+        _movementSystem.SetOffset(_movementSystem.CurrentRoad.Width * _joystick.Horizontal);
     }
 
     public void EnableMovement(bool needEnable)

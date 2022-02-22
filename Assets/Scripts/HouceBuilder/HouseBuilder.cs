@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HouseBuilder : MonoBehaviour
 {
@@ -16,7 +17,11 @@ public class HouseBuilder : MonoBehaviour
     private List<SourceType> _placedItems;
     private Inventory _inventory;
     private Player _player;
-    private float _maxScale = 2f;
+    private float _maxScale = 1f;
+
+    public UnityAction BuildStarted;
+    public UnityAction<float> Placed;
+    public UnityAction BuildFinished;
 
     private void Awake()
     {
@@ -43,7 +48,9 @@ public class HouseBuilder : MonoBehaviour
         {
             _player = player;
             _inventory = _player.GetComponentInChildren<Inventory>();
+            _player.GetComponent<InputTransformation>().EnableMovement(false);
             _player.Run(false);
+            BuildStarted?.Invoke();
             StartCoroutine(Build());
         }
     }
@@ -71,11 +78,14 @@ public class HouseBuilder : MonoBehaviour
                 yield return new WaitForSeconds(_moveDelay / 2);
 
                 sourceType.transform.localScale = Vector3.zero;
+                Placed?.Invoke((float)_placedItems.Count / _items.Length * 100f);
             }
         }
 
-        yield return new WaitForSeconds(_finisherDelay);
+        BuildFinished?.Invoke();
         
+        yield return new WaitForSeconds(_finisherDelay);
+
         if (_placedItems.Count == _items.Length)
         {
             _player.Victory();
@@ -125,5 +135,18 @@ public class HouseBuilder : MonoBehaviour
         position /= _placedItems.Count;
 
         return position;
+    }
+
+    public int GetResourcesCount(string type)
+    {
+        int result = 0;
+        
+        foreach (var item in _items)
+        {
+            if (item.Type == type)
+                result++;
+        }
+
+        return result;
     }
 }

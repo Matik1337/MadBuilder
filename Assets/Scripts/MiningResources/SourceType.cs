@@ -12,7 +12,7 @@ public class SourceType : MonoBehaviour
     [SerializeField] private Transform _upperPoint;
 
     private float _moveToRandPosDelay = .5f;
-    private float _moveToPlayerStep = .05f;
+    private float _moveToPlayerStep = .15f;
     private float _maxScale = 3f;
     private Rigidbody _rigidbody;
     private MeshRenderer[] _meshRenderers;
@@ -50,9 +50,10 @@ public class SourceType : MonoBehaviour
     {
         transform.SetParent(inventory.transform);
         inventory.Add(this);
-        Vector3 targetPosition = inventory.GetTargetPosition();
+        Vector3 targetPosition = inventory.GetTargetPosition(Type);
         
         transform.DOScale(transform.localScale / _maxScale, _moveToRandPosDelay);
+        transform.DOLocalRotateQuaternion(inventory.transform.localRotation, _moveToRandPosDelay);
         
         while (transform.localPosition != targetPosition)
         {
