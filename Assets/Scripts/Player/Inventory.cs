@@ -31,25 +31,25 @@ public class Inventory : MonoBehaviour
     {
         if (type == Constants.Resources.Wood)
         {
-            return CalculateTargetPosition(type, _packingStep);
+            return CalculateTargetPosition();
         }
 
         if (type == Constants.Resources.Stone)
         {
-            return CalculateTargetPosition(type, -_packingStep);
+            return CalculateTargetPosition();
         }
         
         throw new ArgumentException();
     }
 
-    private Vector3 CalculateTargetPosition(string type, float step)
+    private Vector3 CalculateTargetPosition()
     {
-        int count = GetCountOfType(type);
+        int count = _resources.Count;
         int columnNumber = count / _maxTowerSize;
 
         int y = count - _maxTowerSize * columnNumber;
 
-        return new Vector3(0, y* _packingStep, step * (columnNumber + 1) - step / 2);
+        return new Vector3(0, y* _packingStep, -_packingStep * (columnNumber + 1) + _packingStep / 2);
     }
 
     private int GetCountOfType(string type)

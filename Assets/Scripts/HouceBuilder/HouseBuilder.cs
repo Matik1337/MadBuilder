@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +14,7 @@ public class HouseBuilder : MonoBehaviour
     [SerializeField] private float _finisherDelay;
     [SerializeField] private float _explosionPower;
 
-    private SourceType[] _items;
+    private List<SourceType> _items;
     private List<SourceType> _placedItems;
     private Inventory _inventory;
     private Player _player;
@@ -26,7 +27,7 @@ public class HouseBuilder : MonoBehaviour
     private void Awake()
     {
         _placedItems = new List<SourceType>();
-        _items = GetComponentsInChildren<SourceType>();
+        _items = GetComponentsInChildren<SourceType>().ToList();
     }
 
     private void Start()
@@ -69,16 +70,12 @@ public class HouseBuilder : MonoBehaviour
                 current.SetParent(transform);
                 current.DOMove(target.position, _moveDelay);
                 current.DORotateQuaternion(target.rotation, _moveDelay);
-                current.DOScale(target.localScale * _maxScale, _moveDelay / 2);
+                current.DOScale(target.localScale, _moveDelay);
 
-                yield return new WaitForSeconds(_moveDelay / 2);
-                
-                current.DOScale(target.localScale, _moveDelay / 2);
-                
-                yield return new WaitForSeconds(_moveDelay / 2);
+                yield return new WaitForSeconds(_moveDelay / 5);
 
                 sourceType.transform.localScale = Vector3.zero;
-                Placed?.Invoke((float)_placedItems.Count / _items.Length * 100f);
+                Placed?.Invoke((float)_placedItems.Count / _items.Count * 100f);
             }
         }
 
@@ -86,7 +83,7 @@ public class HouseBuilder : MonoBehaviour
         
         yield return new WaitForSeconds(_finisherDelay);
 
-        if (_placedItems.Count == _items.Length)
+        if (_placedItems.Count == _items.Count)
         {
             _player.Victory();
             //platFX

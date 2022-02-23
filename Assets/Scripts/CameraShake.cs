@@ -10,15 +10,20 @@ public class CameraShake : MonoBehaviour
     [SerializeField] private Source[] _sources;
 
     [SerializeField] private float _noiseDelay;
-    
+    [SerializeField] private Vector3 _defaultOffcet;
+    [SerializeField] private Vector3 _buildOffcet;
+
     private CinemachineVirtualCamera _camera;
     private CinemachineBasicMultiChannelPerlin _perlin;
+    private CinemachineTransposer _transposer;
 
     private void Awake()
     {
         _camera = GetComponent<CinemachineVirtualCamera>();
         _perlin = _camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        _transposer = _camera.GetCinemachineComponent<CinemachineTransposer>();
         _perlin.m_AmplitudeGain = 0;
+        _transposer.m_FollowOffset = _defaultOffcet;
     }
 
     private void OnEnable()
@@ -29,6 +34,7 @@ public class CameraShake : MonoBehaviour
         }
 
         _houseBuilder.BuildStarted += OnBuildStarted;
+        _houseBuilder.BuildFinished += OnBuildFinished;
     }
 
     private void OnDisable()
@@ -39,9 +45,18 @@ public class CameraShake : MonoBehaviour
         }
         
         _houseBuilder.BuildStarted -= OnBuildStarted;
+        _houseBuilder.BuildFinished -= OnBuildFinished;
     }
 
     private void OnBuildStarted()
+    {
+        _camera.Priority = 0;
+        //_camera.Follow = _houseBuilder.transform;
+        //_camera.LookAt = _houseBuilder.transform;
+        //_transposer.m_FollowOffset = _buildOffcet;
+    }
+
+    private void OnBuildFinished()
     {
         _camera.Follow = null;
         _camera.LookAt = null;

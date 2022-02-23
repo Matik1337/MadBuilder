@@ -39,7 +39,7 @@ public class SourceType : MonoBehaviour
         Vector3 randomPosition = new Vector3(Random.Range(-range, range), 0, Random.Range(-range, range));
 
         transform.DOMove(transform.position + randomPosition, _moveToRandPosDelay);
-        transform.DOScale(transform.localScale * _maxScale, _moveToRandPosDelay);
+        //transform.DOScale(transform.localScale * _maxScale, _moveToRandPosDelay);
         
         yield return new WaitForSeconds(_moveToRandPosDelay);
         
@@ -52,8 +52,8 @@ public class SourceType : MonoBehaviour
         inventory.Add(this);
         Vector3 targetPosition = inventory.GetTargetPosition(Type);
         
-        transform.DOScale(transform.localScale / _maxScale, _moveToRandPosDelay);
-        transform.DOLocalRotateQuaternion(inventory.transform.localRotation, _moveToRandPosDelay);
+        transform.DOScale(transform.localScale * 1.7f, _moveToRandPosDelay);
+        transform.DOLocalRotateQuaternion(Quaternion.Euler(0, 90, 0), _moveToRandPosDelay);
         
         while (transform.localPosition != targetPosition)
         {

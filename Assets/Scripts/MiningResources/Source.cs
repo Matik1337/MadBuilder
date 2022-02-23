@@ -44,7 +44,7 @@ public class Source : MonoBehaviour
         for (int i = 0; i < _amount; i++)
         {
             var spawned = Instantiate(_currentType, transform.position, Quaternion.identity);
-            
+
             spawned.Move(inventory, _spawnRange);
             
             yield return new WaitForSeconds(_spawnDelay);
