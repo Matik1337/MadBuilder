@@ -16,9 +16,9 @@ MonoBehaviour:
   clientTokens:
   - 
   appIds:
-  - 310330087280554
+  - 700924674611331
   appLabels:
-  - App Name
+  - Mad Builder
   cookie: 1
   logging: 1
   status: 1

@@ -15,6 +15,7 @@ public class SourceType : MonoBehaviour
     private float _moveToPlayerStep = .15f;
     private float _maxScale = 3f;
     private Rigidbody _rigidbody;
+    private CapsuleCollider _capsuleCollider;
     private MeshRenderer[] _meshRenderers;
 
     public string Type => _type;
@@ -23,10 +24,12 @@ public class SourceType : MonoBehaviour
 
     private void Awake()
     {
+        _capsuleCollider = GetComponent<CapsuleCollider>();
         _meshRenderers = GetComponentsInChildren<MeshRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _rigidbody.isKinematic = true;
         _rigidbody.useGravity = false;
+        _capsuleCollider.isTrigger = true;
     }
 
     public void Move(Inventory inventory, float range)
@@ -64,6 +67,7 @@ public class SourceType : MonoBehaviour
 
     public void Explode(Vector3 direction, float power)
     {
+        _capsuleCollider.isTrigger = false;
         _rigidbody.isKinematic = false;
         _rigidbody.useGravity = true;
         _rigidbody.AddForce(direction * power, ForceMode.VelocityChange);
@@ -74,6 +78,14 @@ public class SourceType : MonoBehaviour
         foreach (var renderer in _meshRenderers)
         {
             renderer.material = material;
+        }
+    }
+
+    public void Disable()
+    {
+        foreach (var renderer in _meshRenderers)
+        {
+            renderer.enabled = false;
         }
     }
 }

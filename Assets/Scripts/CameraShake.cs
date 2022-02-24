@@ -7,7 +7,7 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
     [SerializeField] private HouseBuilder _houseBuilder;
-    [SerializeField] private Source[] _sources;
+    [SerializeField] private GameObject _sourcesParent;
 
     [SerializeField] private float _noiseDelay;
     [SerializeField] private Vector3 _defaultOffcet;
@@ -16,9 +16,11 @@ public class CameraShake : MonoBehaviour
     private CinemachineVirtualCamera _camera;
     private CinemachineBasicMultiChannelPerlin _perlin;
     private CinemachineTransposer _transposer;
+    private Source[] _sources;
 
     private void Awake()
     {
+        _sources = _sourcesParent.GetComponentsInChildren<Source>();
         _camera = GetComponent<CinemachineVirtualCamera>();
         _perlin = _camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
         _transposer = _camera.GetCinemachineComponent<CinemachineTransposer>();

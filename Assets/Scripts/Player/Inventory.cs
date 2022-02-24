@@ -15,6 +15,7 @@ public class Inventory : MonoBehaviour
     
     public IEnumerable<SourceType> Resources => _resources;
     public UnityAction<string> Added;
+    public UnityAction<string> Removed;
 
     private void Awake()
     {
@@ -25,6 +26,12 @@ public class Inventory : MonoBehaviour
     {
         _resources.Insert(0, resource);
         Added?.Invoke(resource.Type);
+    }
+
+    public void Remove(SourceType resource)
+    {
+        _resources.Remove(resource);
+        Removed?.Invoke(resource.Type);
     }
 
     public Vector3 GetTargetPosition(string type)
@@ -52,7 +59,7 @@ public class Inventory : MonoBehaviour
         return new Vector3(0, y* _packingStep, -_packingStep * (columnNumber + 1) + _packingStep / 2);
     }
 
-    private int GetCountOfType(string type)
+    public int GetCountOfType(string type)
     {
         return _resources.Count(resource => resource.Type == type);
     }

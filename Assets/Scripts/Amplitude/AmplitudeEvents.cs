@@ -17,5 +17,13 @@ public static class AmplitudeEvents
         public const string Level = "level";
         public const string Reason = "reason";
         public const string TimeSpent = "time_spent";
+        public const string DayOfRegister = "day_of_register";
+    }
+
+    public static class Reasons
+    {
+        public const string DeadFromEnemy = "dead_from_enemy";
+        public const string NotEnoughResourcesForHouse = "not_enough_resources_for_house";
+        public const string NotEnoughResourcesForBridge = "not_enough_resources_for_bridge";
     }
 }

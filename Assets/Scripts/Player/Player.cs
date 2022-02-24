@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using Cinemachine;
+using Extensions;
 using RunnerMovementSystem;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(InputTransformation))]
 [RequireComponent(typeof(PlayerAnimatorHolder))]
@@ -15,6 +17,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _changeStep;
     [SerializeField] private float _miningDelay;
     [SerializeField] private float _deathDelay;
+    [SerializeField] private float _fightSpeed;
     [SerializeField] private CinemachineVirtualCamera _camera;
     [SerializeField] private ParticleSystem _swordFX;
 
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
         _input = GetComponent<InputTransformation>();
         _animatorHolder = GetComponent<PlayerAnimatorHolder>();
         _movementSystem = GetComponent<MovementSystem>();
+        Amplitude.Instance.LogLevelStart(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void Start()
@@ -65,12 +69,25 @@ public class Player : MonoBehaviour
         }
     }
     
+    public void SetDefaultSpeed()
+    {
+        StartCoroutine(ChangeSpeed(_runSpeed));
+    }
+
+    public void SetFightSpeed()
+    {
+        StartCoroutine(ChangeSpeed(_fightSpeed));
+    }
+    
     public void Die()
     {
         _input.EnableMovement(false);
         _animatorHolder.SetAnimation(Constants.Animations.Death, _deathDelay);
         _camera.Follow = null;
         _camera.LookAt = null;
+        
+        Amplitude.Instance.LogLevelFail(SceneManager.GetActiveScene().buildIndex, 
+            AmplitudeEvents.Reasons.DeadFromEnemy, (int)Time.time);
         Lost?.Invoke();
     }
 
@@ -87,6 +104,7 @@ public class Player : MonoBehaviour
     public void Run(bool needRun)
     {
         _animatorHolder.SetMoveState(needRun);
+        _input.EnableMovement(needRun);
 
         if (needRun)
             _movementSystem.SetSpeed(_runSpeed);
@@ -97,11 +115,13 @@ public class Player : MonoBehaviour
     public void Victory()
     {
         _animatorHolder.SetAnimation(Constants.Animations.Victory, 0);
+        Amplitude.Instance.LogLevelComplete(SceneManager.GetActiveScene().buildIndex, (int) Time.time);
         Won?.Invoke();
     }
 
     public void Defeat()
     {
+        Run(false);
         _animatorHolder.SetAnimation(Constants.Animations.Defeat, 0);
         Lost?.Invoke();
     }

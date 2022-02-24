@@ -25,19 +25,26 @@ public class PanelsManager : MonoBehaviour
 
     private void OnDisable()
     {
-        _player.Won -= OnWon;
-        _player.Lost -= OnLost;
+        Unsubscribe();
     }
 
     private void OnWon()
     {
+        Unsubscribe();
         _winPanel.Enable(_maxScale, _animationDelay);
         _resourcesDispalyer.Disable();
     }
 
     private void OnLost()
     {
+        Unsubscribe();
         _losePanel.Enable(_maxScale, _animationDelay);
         _resourcesDispalyer.Disable();
+    }
+
+    private void Unsubscribe()
+    {
+        _player.Won -= OnWon;
+        _player.Lost -= OnLost;
     }
 }

@@ -112,6 +112,7 @@ GameObject:
   - component: {fileID: 3350534075514015698}
   - component: {fileID: 3345677909844818550}
   - component: {fileID: 3345677909844818549}
+  - component: {fileID: 238486198586333229}
   m_Layer: 0
   m_Name: Stone
   m_TagString: Untagged
@@ -166,6 +167,20 @@ MonoBehaviour:
   _type: Stone
   _tool: Pick
   _upperPoint: {fileID: 3345677911044340233}
+--- !u!136 &238486198586333229
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3345040647062827974}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 0.52
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3345677911044340232
 GameObject:
   m_ObjectHideFlags: 0

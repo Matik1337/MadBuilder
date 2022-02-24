@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Extensions;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class HouseBuilder : MonoBehaviour
 {
@@ -19,6 +21,7 @@ public class HouseBuilder : MonoBehaviour
     private Inventory _inventory;
     private Player _player;
     private float _maxScale = 1f;
+    private bool _isWorked;
 
     public UnityAction BuildStarted;
     public UnityAction<float> Placed;
@@ -45,8 +48,9 @@ public class HouseBuilder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
+        if (other.TryGetComponent(out Player player) && !_isWorked)
         {
+            _isWorked = true;
             _player = player;
             _inventory = _player.GetComponentInChildren<Inventory>();
             _player.GetComponent<InputTransformation>().EnableMovement(false);
@@ -74,7 +78,7 @@ public class HouseBuilder : MonoBehaviour
 
                 yield return new WaitForSeconds(_moveDelay / 5);
 
-                sourceType.transform.localScale = Vector3.zero;
+                sourceType.Disable();
                 Placed?.Invoke((float)_placedItems.Count / _items.Count * 100f);
             }
         }
@@ -86,11 +90,15 @@ public class HouseBuilder : MonoBehaviour
         if (_placedItems.Count == _items.Count)
         {
             _player.Victory();
+            enabled = false;
             //platFX
         }
         else
         {
             Collapse();
+            Amplitude.Instance.LogLevelFail(SceneManager.GetActiveScene().buildIndex, 
+                AmplitudeEvents.Reasons.NotEnoughResourcesForHouse, (int)Time.time);
+            
             _player.Defeat();
         }
     }
@@ -118,6 +126,8 @@ public class HouseBuilder : MonoBehaviour
         {
             item.Explode((item.transform.position - startPoint).normalized, _explosionPower);
         }
+
+        enabled = false;
     }
 
     private Vector3 GetAveragePosition()

@@ -1,3 +1,4 @@
+using Extensions;
 using UnityEngine.SceneManagement;
 
 public class LosePanel : Panel
@@ -9,6 +10,7 @@ public class LosePanel : Panel
 
     private void RestartLevel()
     {
+        Amplitude.Instance.LogLevelRestart(SceneManager.GetActiveScene().buildIndex);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
