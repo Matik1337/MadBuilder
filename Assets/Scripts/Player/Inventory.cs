@@ -31,7 +31,16 @@ public class Inventory : MonoBehaviour
     public void Remove(SourceType resource)
     {
         _resources.Remove(resource);
+        Replace();
         Removed?.Invoke(resource.Type);
+    }
+
+    private void Replace()
+    {
+        for (int i = 0; i < _resources.Count; i++)
+        {
+            _resources[i].transform.localPosition = CalculateTargetPosition(i);
+        }
     }
 
     public Vector3 GetTargetPosition(string type)
@@ -55,6 +64,15 @@ public class Inventory : MonoBehaviour
         int columnNumber = count / _maxTowerSize;
 
         int y = count - _maxTowerSize * columnNumber;
+
+        return new Vector3(0, y* _packingStep, -_packingStep * (columnNumber + 1) + _packingStep / 2);
+    }
+
+    private Vector3 CalculateTargetPosition(int index)
+    {
+        int columnNumber = index / _maxTowerSize;
+
+        int y = index - _maxTowerSize * columnNumber;
 
         return new Vector3(0, y* _packingStep, -_packingStep * (columnNumber + 1) + _packingStep / 2);
     }

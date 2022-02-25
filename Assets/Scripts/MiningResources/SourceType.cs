@@ -42,14 +42,13 @@ public class SourceType : MonoBehaviour
         Vector3 randomPosition = new Vector3(Random.Range(-range, range), 0, Random.Range(-range, range));
 
         transform.DOMove(transform.position + randomPosition, _moveToRandPosDelay);
-        //transform.DOScale(transform.localScale * _maxScale, _moveToRandPosDelay);
         
         yield return new WaitForSeconds(_moveToRandPosDelay);
         
-        StartCoroutine(MoveToPlayer(inventory));
+        MoveToPlayer(inventory);
     }
 
-    private IEnumerator MoveToPlayer(Inventory inventory)
+    private void MoveToPlayer(Inventory inventory)
     {
         transform.SetParent(inventory.transform);
         inventory.Add(this);
@@ -57,12 +56,7 @@ public class SourceType : MonoBehaviour
         
         transform.DOScale(transform.localScale * 1.7f, _moveToRandPosDelay);
         transform.DOLocalRotateQuaternion(Quaternion.Euler(0, 90, 0), _moveToRandPosDelay);
-        
-        while (transform.localPosition != targetPosition)
-        {
-            transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, _moveToPlayerStep);
-            yield return null;
-        }
+        transform.DOLocalMove(targetPosition, _moveToRandPosDelay / 2);
     }
 
     public void Explode(Vector3 direction, float power)

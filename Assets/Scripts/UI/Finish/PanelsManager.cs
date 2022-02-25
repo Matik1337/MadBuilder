@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PanelsManager : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class PanelsManager : MonoBehaviour
 
     private void OnWon()
     {
+        int currentLvl = SceneManager.GetActiveScene().buildIndex;
+        
+        if(currentLvl == 15)
+            PlayerPrefs.SetInt(AmplitudeEvents.LastLevel, 1);
+        else 
+            PlayerPrefs.SetInt(AmplitudeEvents.LastLevel, currentLvl + 1);
+        
         Unsubscribe();
         _winPanel.Enable(_maxScale, _animationDelay);
         _resourcesDispalyer.Disable();

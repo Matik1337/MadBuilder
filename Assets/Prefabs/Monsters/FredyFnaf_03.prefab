@@ -858,11 +858,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8383428379481421571}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.45, y: 1, z: 1.88}
-  m_Center: {x: 0, y: 0.61, z: 1.21}
+  m_Size: {x: 1.4499999, y: 0.9999998, z: 5.6730847}
+  m_Center: {x: 0, y: 0.61, z: 3.1065419}
 --- !u!95 &-4022345969734504212
 Animator:
   serializedVersion: 3
@@ -1203,7 +1203,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 3}
+  m_AnchoredPosition: {x: 0, y: 3.469}
   m_SizeDelta: {x: 0.7563, y: 0.7556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &4431477569610021926

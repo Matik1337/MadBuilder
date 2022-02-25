@@ -22,14 +22,26 @@ public class ResourcesDispalyer : MonoBehaviour
     private void OnEnable()
     {
         _inventory.Added += OnAdded;
+        _inventory.Removed += OnRemoved;
     }
 
     private void OnDisable()
     {
         _inventory.Added -= OnAdded;
+        _inventory.Removed -= OnRemoved;
+    }
+
+    private void OnRemoved(string type)
+    {
+        ChangeValues(type, -1);
     }
 
     private void OnAdded(string type)
+    {
+        ChangeValues(type, 1);
+    }
+
+    private void ChangeValues(string type, int delta)
     {
         TMP_Text text;
         int current;
@@ -37,14 +49,14 @@ public class ResourcesDispalyer : MonoBehaviour
 
         if (type == Constants.Resources.Wood)
         {
-            _currentWood++;
+            _currentWood += delta;
             text = _woodText;
             current = _currentWood;
             target = _targetWood;
         }
         else if (type == Constants.Resources.Stone)
         {
-            _currentStone++;
+            _currentStone += delta;
             text = _stoneText;
             current = _currentStone;
             target = _targetStone;
@@ -75,8 +87,10 @@ public class ResourcesDispalyer : MonoBehaviour
     {
         text.text = current + "/" + target;
         
-        if(current == target)
+        if(current >= target)
             text.color = Color.green;
+        else 
+            text.color = Color.white;
     }
 
     public void Disable()

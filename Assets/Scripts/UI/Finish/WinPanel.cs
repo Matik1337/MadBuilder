@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class WinPanel : Panel
@@ -9,6 +10,6 @@ public class WinPanel : Panel
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(PlayerPrefs.GetInt(AmplitudeEvents.LastLevel));
     }
 }

@@ -113,6 +113,7 @@ public class HouseBuilder : MonoBehaviour
         var result = resources.First(item => item.Type == current.Type);
 
         resources.Remove(result);
+        _inventory.Remove(result);
         _placedItems.Add(result);
 
         return result;
