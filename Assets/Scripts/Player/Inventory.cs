@@ -70,6 +70,7 @@ public class Inventory : MonoBehaviour
 
     private Vector3 CalculateTargetPosition(int index)
     {
+        index++;
         int columnNumber = index / _maxTowerSize;
 
         int y = index - _maxTowerSize * columnNumber;
