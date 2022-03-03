@@ -272,7 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runSpeed: 12
   _miningSpeed: 9
-  _changeStep: 0.3
+  _changeStep: 1
   _miningDelay: 0.3
   _deathDelay: 0.15
   _fightSpeed: 6

@@ -55,13 +55,14 @@ public class SourceDestroyer : MonoBehaviour
         
         foreach (var rigidbody in _rigidbodies)
         {
-            rigidbody.isKinematic = false;
-            rigidbody.useGravity = true;
+            //rigidbody.isKinematic = false;
+            //rigidbody.useGravity = true;
 
             Vector3 direction = (rigidbody.transform.position - avgPos).normalized;
 
-            rigidbody.AddForce(direction * _power, ForceMode.VelocityChange);
+            rigidbody.transform.DOLocalMove(direction * 30, _destroyDelay);
             rigidbody.transform.DOScale(Vector3.zero, _destroyDelay);
+            
             Destroy(rigidbody.gameObject, _destroyDelay);
         }
     }

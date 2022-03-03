@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _miningSpeed;
-    [SerializeField] private float _changeStep;
     [SerializeField] private float _miningDelay;
     [SerializeField] private float _deathDelay;
     [SerializeField] private float _fightSpeed;
@@ -28,12 +27,14 @@ public class Player : MonoBehaviour
     private InputTransformation _input;
     private PlayerAnimatorHolder _animatorHolder;
     private MovementSystem _movementSystem;
+    private float _startTime;
 
     public UnityAction Won;
     public UnityAction Lost;
     
     private void Awake()
     {
+        _startTime = Time.time;
         _input = GetComponent<InputTransformation>();
         _animatorHolder = GetComponent<PlayerAnimatorHolder>();
         _movementSystem = GetComponent<MovementSystem>();
@@ -62,11 +63,9 @@ public class Player : MonoBehaviour
 
     private IEnumerator ChangeSpeed(float targetValue)
     {
-        while (_movementSystem.CurrentSpeed != targetValue)
-        {
-            _movementSystem.SetSpeed(Mathf.MoveTowards(_movementSystem.CurrentSpeed, targetValue, _changeStep));
-            yield return null;
-        }
+        _movementSystem.SetSpeed(targetValue);
+        
+        yield break;
     }
     
     public void SetDefaultSpeed()
@@ -87,7 +86,7 @@ public class Player : MonoBehaviour
         _camera.LookAt = null;
         
         Amplitude.Instance.LogLevelFail(SceneManager.GetActiveScene().buildIndex, 
-            AmplitudeEvents.Reasons.DeadFromEnemy, (int)Time.time);
+            AmplitudeEvents.Reasons.DeadFromEnemy, (int)(Time.time - _startTime));
         Lost?.Invoke();
     }
 
@@ -115,7 +114,7 @@ public class Player : MonoBehaviour
     public void Victory()
     {
         _animatorHolder.SetAnimation(Constants.Animations.Victory, 0);
-        Amplitude.Instance.LogLevelComplete(SceneManager.GetActiveScene().buildIndex, (int) Time.time);
+        Amplitude.Instance.LogLevelComplete(SceneManager.GetActiveScene().buildIndex, (int)(Time.time - _startTime));
         Won?.Invoke();
     }
 

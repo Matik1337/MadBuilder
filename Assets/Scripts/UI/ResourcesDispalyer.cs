@@ -85,6 +85,9 @@ public class ResourcesDispalyer : MonoBehaviour
 
     private void SetText(TMP_Text text, int current, int target)
     {
+        if (current < 0)
+            current = 0;
+        
         text.text = current + "/" + target;
         
         if(current >= target)

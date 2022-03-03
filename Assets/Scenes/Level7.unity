@@ -3216,7 +3216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
   m_PivotOffset: {x: 0, y: 0, z: 0}
-  m_AmplitudeGain: 0
+  m_AmplitudeGain: 1
   m_FrequencyGain: 1
   mNoiseOffsets: {x: -458.52747, y: -899.9929, z: 677.6709}
 --- !u!1 &261175138 stripped
@@ -24860,15 +24860,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1450402352178825717, guid: 2c575a0e4610d7049af0c1ed209764a3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -39.402138
+      value: -39
       objectReference: {fileID: 0}
     - target: {fileID: 1450402352178825717, guid: 2c575a0e4610d7049af0c1ed209764a3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.065675
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 1450402352178825717, guid: 2c575a0e4610d7049af0c1ed209764a3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 33.409657
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 1450402352178825717, guid: 2c575a0e4610d7049af0c1ed209764a3, type: 3}
       propertyPath: m_LocalRotation.w

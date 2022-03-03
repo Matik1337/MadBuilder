@@ -734,6 +734,7 @@ MonoBehaviour:
   _spawnRange: 2
   _spawnDelay: 0.1
   _startSpawnDelay: 0
+  _image: {fileID: 7128476645610551317}
   _maxScale: 1.1
   _maxScaleDelay: 0.2
   _minScaleDelay: 0.5
@@ -749,8 +750,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 15.4594, y: 14.35034, z: 13.684177}
-  m_Center: {x: -11.275721, y: 6.6751704, z: -0.43745846}
+  m_Size: {x: 24.530598, y: 14.35034, z: 13.684177}
+  m_Center: {x: -6.740122, y: 6.6751704, z: -0.43745846}
 --- !u!114 &7266027640673124656
 MonoBehaviour:
   m_ObjectHideFlags: 0

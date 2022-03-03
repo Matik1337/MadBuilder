@@ -28292,6 +28292,10 @@ PrefabInstance:
       propertyPath: _sourcesParent
       value: 
       objectReference: {fileID: 2098728845}
+    - target: {fileID: 5006473703337032745, guid: d614d023371fc97409cda6ecccc6849b, type: 3}
+      propertyPath: m_AmplitudeGain
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d614d023371fc97409cda6ecccc6849b, type: 3}
 --- !u!1001 &5848723942479625842
